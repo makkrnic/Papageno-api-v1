@@ -9,11 +9,12 @@ All requests except authorization requests `/oauth/*` require authorization toke
 # Group Authorization
 OAuth2 authorization
 
-## Using username and password [/oauth/token]
+Only API calls that doesn't use /api/v1 prefix
 
-Only API call that doesn't use /api/v1 prefix
+## Authorize [/oauth/token]
 
-### Authorize [POST]
+### Using username and password [POST]
+
 + Parameters
 
     + grant_type  (required, string)  ... Grant type. Has to be `password` in this case.
@@ -28,6 +29,29 @@ Only API call that doesn't use /api/v1 prefix
           "client_id": "2c98244711dd3d09b7782adbb8d95c83e972eeffd2939dd0f68a3951b6435130",
           "username": "username",
           "password": "user_password"
+        }
+
++ Response 200 (application/json)
+
+        {
+          "access_token": "09732c68d78b8119e3fb197a66f79e860f76fa4760fb79fd8271562aad3694b6",
+          "token_type": "bearer",
+          "expires_in": 7200,
+          "refresh_token":"d701cefa5804adb6aefc628eefd0a6730f009f069be973aab2306c6ef888ba53"
+        }
+
+### Using refresh_token [POST]
+
++ Parameters
+
+    + grant_type    (required, string)  ... Grant type. Has to be `refresh_token` in this case.
+    + refresh_token (required, string)  ... Previously issued refresh token
+
++ Request (application/json)
+
+        {
+          "grant_type": "refresh_token",
+          "refresh_token": "89219b474f7e3ca9748e8499addf00cc0a033f470abab7489df0b9b871ad9387"
         }
 
 + Response 200 (application/json)
