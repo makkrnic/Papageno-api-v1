@@ -4,6 +4,8 @@ FORMAT: 1A
 Papageno API is the API to the [Papageno choirs manager](http://www.papageno.info/) available at https://www.papageno.info/api/v1/ or https://staging.papageno.info/api/v1/.
 The SSL certificates are available at [/www.papageno.info.cert](http://www.papageno.info/www.papageno.info.cert) and [/staging.papageno.info.cert](http://staging.papageno.info/staging.papageno.info.cert), respectively.
 
+All requests except authorization requests `/oauth/*` require authorization token to be present in the header `Authorization: Bearer <access_token>`.
+
 # Group Authorization
 OAuth2 authorization
 
@@ -42,7 +44,7 @@ Only API call that doesn't use /api/v1 prefix
 
 A single user with its details
 
-### GET 
+### GET
 + Parameters
 
     + id (required, string, `1`)  ... User's id. Can be `me` in which case it is referencing current user
