@@ -1,46 +1,70 @@
 FORMAT: 1A
 
 # Papageno API
-Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+Papageno API is the API to the [Papageno choirs manager](http://www.papageno.info/) available at https://www.papageno.info/api/v1/ or https://staging.papageno.info/api/v1/.
+The SSL certificates are available at [/www.papageno.info.cert](http://www.papageno.info/www.papageno.info.cert) and [/staging.papageno.info.cert](http://staging.papageno.info/staging.papageno.info.cert), respectively.
 
-# Group Notes
-Notes related resources of the **Notes API**
+# Group Authorization
+OAuth2 authorization
 
-## Notes Collection [/notes]
-### List all Notes [GET]
-+ Response 200 (application/json)
+## Using username and password [/oauth/token]
 
-        [{
-          "id": 1, "title": "Jogging in park"
-        }, {
-          "id": 2, "title": "Pick-up posters from post-office"
-        }]
+Only API call that doesn't use /api/v1 prefix
 
-### Create a Note [POST]
+### Authorize [POST]
++ Parameters
+
+    + grant_type  (required, string)  ... Grant type. Has to be `password` in this case.
+    + client_id   (required, string)  ... Client id obtainder from the provider (Papageno)
+    + username    (required, string)  ... Papageno user's email address
+    + password    (required, string)  ... Papageno user's password
+
 + Request (application/json)
 
-        { "title": "Buy cheese and bread for breakfast." }
+        {
+          "grant_type": "password",
+          "client_id": "2c98244711dd3d09b7782adbb8d95c83e972eeffd2939dd0f68a3951b6435130",
+          "username": "username",
+          "password": "user_password"
+        }
 
-+ Response 201 (application/json)
-
-        { "id": 3, "title": "Buy cheese and bread for breakfast." }
-
-## Note [/notes/{id}]
-A single Note object with all its details
-
-+ Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
-
-### Retrieve a Note [GET]
 + Response 200 (application/json)
 
-    + Header
+        {
+          "access_token": "09732c68d78b8119e3fb197a66f79e860f76fa4760fb79fd8271562aad3694b6",
+          "token_type": "bearer",
+          "expires_in": 7200,
+          "refresh_token":"d701cefa5804adb6aefc628eefd0a6730f009f069be973aab2306c6ef888ba53"
+        }
 
-            X-My-Header: The Value
+# Group Users
+## User [/users/{id}]
 
-    + Body
+A single user with its details
 
-            { "id": 2, "title": "Pick-up posters from post-office" }
+### GET 
++ Parameters
 
-### Remove a Note [DELETE]
-+ Response 204
+    + id (required, string, `1`)  ... User's id. Can be `me` in which case it is referencing current user
+
++ Request (application/json)
+
+    + Headers
+
+        Authorization: Bearer { acces_token }
+
++ Response 200 (application/json)
+
+    {
+      "id": 1,
+      "first_name": "First",
+      "last_name" : "Last",
+      "email"     : "user@example.com",
+      "choirs"     : [
+            {
+              "id": 1,
+              "slug": "choir-1",
+              "name": "Choir 1"
+            }
+        ]
+    }
