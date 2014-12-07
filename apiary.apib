@@ -80,22 +80,44 @@ Returns user details or `HTTP 403`
 
     + Headers
 
-        Authorization: Bearer <acces_token>
+            Authorization: Bearer <acces_token>
 
 + Response 200 (application/json)
 
-    {
-      "id": 1,
-      "first_name": "First",
-      "last_name" : "Last",
-      "email"     : "user@example.com",
-      "choirs"     : [
-            {
-              "id": 1,
-              "slug": "choir-1",
-              "name": "Choir 1"
-            }
-        ]
-    }
+        {
+          "id": 1,
+          "first_name": "First",
+          "last_name" : "Last",
+          "email"     : "user@example.com",
+          "choirs"     : [
+                {
+                  "id": 1,
+                  "slug": "choir-1",
+                  "name": "Choir 1"
+                }
+            ]
+        }
 
 + Response 403
+
+# Group Rehearsals
+## Rehearsals collection [/rehearsals]
+Choir's rehearsals
+
+### List all Rehearsals [GET]
++ Parameters
+
+    + choir_id (required, integer, `1`) ... Choir which rehearsals are requested
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <acces_token>
+
+    + Body
+
+            {
+              "choir_id": 1
+            }
