@@ -100,8 +100,23 @@ Returns user details or `HTTP 403`
 
 + Response 403
 
+# Group Choirs
+## Single choir [/choirs/{id}]
+
+### GET
++ Parameters
+
+    + id (required, integer, `1`) ... Choir id
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <access_token>
+
+
 # Group Rehearsals
-## Rehearsals collection [/rehearsals]
+## Rehearsals collection [/choirs/{choir_id}/rehearsals]
 Choir's rehearsals
 
 ### List all Rehearsals [GET]
@@ -115,9 +130,3 @@ Choir's rehearsals
     + Headers
 
             Authorization: Bearer <acces_token>
-
-    + Body
-
-            {
-              "choir_id": 1
-            }
