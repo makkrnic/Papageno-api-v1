@@ -117,12 +117,144 @@ Returns user details or `HTTP 403`
 
 # Group Rehearsals
 ## Rehearsals collection [/choirs/{choir_id}/rehearsals]
-Choir's rehearsals
+Choir's rehearsals in reverse chronological order
 
 ### List all Rehearsals [GET]
 + Parameters
 
     + choir_id (required, integer, `1`) ... Choir which rehearsals are requested
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <acces_token>
+
+# Group Rehearsal attendances
+
+## Rehearsal attendances collection [/choirs/{choir_id}/rehearsals/{rehearsal_id}/attendances]
+
+### List all attendances [GET]
+List of attendances for rehearsal
+
++ Parameters
+
+    + choir_id (required, integer, `1`) ... Choir which rehearsals are requested
+    + rehearsal_id (required, integer, `64`) ... Rehearsal for which attendances are requested 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <acces_token>
+
++ Response 200 (application/json)
+
+        [
+          {
+            "id": null,
+            "status":null,
+            "note":null,
+            "user":{
+              "id":58,
+              "first_name":"First",
+              "last_name":"User",
+              "email":"first_user@example.com"
+            },
+            "rehersal":{
+              "id": 64
+            }
+          },
+          {
+            "id": 88
+            "status": "not_attending"
+            "note": "some note",
+            "user": {
+              "id":50,
+              "first_name":"Second",
+              "last_name":"User",
+              "email":"second_user@example.com"
+            },
+            "rehersal": {
+              "id": 64
+            }
+          }
+        ]
+
+### POST
+Create a new attendance
+
++ Parameters
+
+    + choir_id (required, integer, `1`) ... Choir which rehearsals are requested
+    + rehearsal_id (required, integer, `1`) ... Rehearsal for which attendances are requested 
+
++ Request (application/json)
+
+        {
+          "user_id": 42,
+            "attendance" {
+              "status"  : "attending/not_attending",
+              "note"    : "arbitrary string"
+            }
+        }
+    
+    + Headers
+
+            Authorization: Bearer <acces_token>
+
+
++ Response 201 (application/json)
+
+        {
+          "id": 88
+          "status": "not_attending"
+          "note": "some note",
+          "user": {
+            "id":50,
+            "first_name":"Second",
+            "last_name":"User",
+            "email":"second_user@example.com"
+          },
+          "rehersal": {
+            "id": 64
+          }
+        }
+
+## Single Rehearsal attendance  [/choirs/{choir_id}/rehearsals/{rehearsal_id}/attendances/{attendance_id}]
+### GET
+Return single attendance
+
++ Parameters
+
+    + choir_id (required, integer, `1`) ... Choir which rehearsals are requested
+    + rehearsal_id (required, integer, `1`) ... Rehearsal for which attendance is requested 
+    + attendance_id (required, integer, `1`)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer <acces_token>
+
+### PUT
+Update single attendance
+
++ Parameters
+
+    + choir_id (required, integer, `1`) ... Choir which rehearsals are requested
+    + rehearsal_id (required, integer, `1`) ... Rehearsal for which attendance is requested 
+    + attendance_id (required, integer, `1`)
+
++ Request (application/json)
+
+        {
+            "attendance" {
+              "status"  : "attending/not_attending",
+              "note"    : "arbitrary string"
+            }
+        }
 
 
 + Request (application/json)
